@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SERVER_IP      = '172.31.7.198'
+        SERVER_IP      = '172.31.2.172'
         SSH_CREDENTIAL = 'Virginia'
         REPO_URL       = 'https://github.com/pratik-ghondage/gym-static-website.git'
         BRANCH         = 'main'
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Deploy to Target Server') {
             steps {
-                sshagent(['wrong-credential-id']) {
+                sshagent(['SSH_CREDENTIAL']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
                         scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
