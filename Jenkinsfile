@@ -12,15 +12,9 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git branch: "${BRANCH}", url: "${REPO_URL}"
-            }
-        }
-
         stage('Deploy to Target Server') {
             steps {
-                sshagent(['SSH_CREDENTIAL']) {
+                sshagent([SSH_CREDENTIAL]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} 'mkdir -p ${REMOTE_PATH}'
                         scp -o StrictHostKeyChecking=no -r * ${REMOTE_USER}@${SERVER_IP}:${REMOTE_PATH}
@@ -34,13 +28,12 @@ pipeline {
                 sshagent([SSH_CREDENTIAL]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} '
-                            sudo systemctl restart nginxx
+                            sudo systemctl restart nginx
                         '
                     """
                 }
             }
         }
-
     }
 
     post {
