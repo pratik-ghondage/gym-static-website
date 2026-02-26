@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SERVER_IP      = '98.86.171.50'
+        SERVER_IP      = '172.31.7.198'
         SSH_CREDENTIAL = 'Virginia'
         REPO_URL       = 'https://github.com/pratik-ghondage/gym-static-website.git'
         BRANCH         = 'main'
